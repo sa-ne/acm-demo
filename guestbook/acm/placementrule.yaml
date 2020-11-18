@@ -9,7 +9,7 @@ spec:
       status: "True"
   clusterSelector:
     matchExpressions:
-    - key: app
+    - key: app-guestbook
       operator: In
       values:
-      - guestbook
+      - ""
