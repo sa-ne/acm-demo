@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ocs-noobaa-only
+  annotations:
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
+  labels:
+    gitops.ownedBy: cluster-config
+spec:
+  destination:
+    namespace: openshift-gitops
+    server: https://kubernetes.default.svc
+  project: cluster-config
+  source:
+    path: gitops/manifests/clusters/acm-hub/ocs-noobaa-only/base
+    repoURL: https://github.com/sa-ne/acm-demo.git
+    targetRevision: main
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
