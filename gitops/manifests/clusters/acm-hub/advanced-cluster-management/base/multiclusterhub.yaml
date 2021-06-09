@@ -1,7 +1,7 @@
 apiVersion: operator.open-cluster-management.io/v1
 kind: MultiClusterHub
 metadata:
-  name: umbrella-hub
+  name: acm-hub
   namespace: open-cluster-management
   annotations:
     argocd.argoproj.io/sync-wave: "3"

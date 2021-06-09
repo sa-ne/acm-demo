@@ -16,9 +16,9 @@ spec:
         - image: image-registry.openshift-image-registry.svc:5000/ansible-runner/ansible-runner:latest
           env:
             - name: GIT_DIRECTORY
-              value: "/tmp/git/umbrella-gitops"
+              value: "/tmp/git/acm-demo"
             - name: GIT_URL
-              value: "https://github.com/nasx/umbrella-gitops.git"
+              value: "https://github.com/sa-ne/acm-demo.git"
             - name: ANSIBLE_PLAYBOOK
               value: "ansible/playbooks/acm-byo-certs.yaml"
             - name: ANSIBLE_CONFIG
