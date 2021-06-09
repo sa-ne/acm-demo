@@ -6,3 +6,4 @@ resources:
   - resource-locker-app.yaml
   - ingress-controller-app.yaml
   - ocs-noobaa-only-app.yaml
+  - advanced-cluster-management-app.yaml
