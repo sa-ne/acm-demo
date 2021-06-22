@@ -1,0 +1,9 @@
+# For some reason 2.0.3 of kubernetes.core collection doesn't work? Debug later.
+- name: Import Cluster
+  k8s:
+    kubeconfig: "{{ item.0.kubeconfig }}"
+    resource_definition: "{{ manifest | to_yaml(width=32768) }}"
+    state: present
+  loop: "{{ item.1.resources[0].data['import.yaml'] | b64decode | from_yaml_all | list }}"
+  loop_control:
+    loop_var: manifest

@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
   - ../../../../operators/advanced-cluster-management/base
-  - pull-secret-sealed.yaml
+  - aws-provider-sealed.yaml
   - byo-ingress-sealed.yaml
   - byo-ca-sealed.yaml
   - byo-certs-job.yaml
@@ -11,3 +11,5 @@ resources:
   - observability-namespace.yaml
   - observability-obc.yaml
   - observability-job.yaml
+  - provider-connections-namespace.yaml
+  - pull-secret-sealed.yaml

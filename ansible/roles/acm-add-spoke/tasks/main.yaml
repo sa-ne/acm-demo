@@ -58,7 +58,9 @@
 
 - name: Wait till the import secret is created
   kubernetes.core.k8s_info:
+    api_version: v1
     kind: Secret
+    kubeconfig: "{{ acm.acm_hub_kubeconfig }}"
     name: "{{ spoke.name }}-import"
     namespace: "{{ spoke.name }}"
     wait: yes
@@ -67,8 +69,6 @@
   loop: "{{ acm.spokes }}"
   loop_control:
     loop_var: spoke
-  tags:
-    - acm-add-spoke
 
 - name: Gather Installation Payloads
   kubernetes.core.k8s_info:
@@ -110,10 +110,16 @@
     - "{{ payloads.results }}"
 
 - name: Configure Spoke Clusters - Import
-  kubernetes.core.k8s:
-    kubeconfig: "{{ item.0.kubeconfig }}"
-    resource_definition: "{{ item.1.resources[0].data['import.yaml'] | b64decode | from_yaml_all | list }}"
-    state: present
+  include_tasks: import-cluster.yaml
   with_together:
     - "{{ acm.spokes }}"
     - "{{ payloads.results }}"
+
+#- name: Configure Spoke Clusters - Import
+#  kubernetes.core.k8s:
+#    kubeconfig: "{{ item.0.kubeconfig }}"
+#    resource_definition: "{{ item.1.resources[0].data['import.yaml'] | b64decode | from_yaml_all | list }}"
+#    state: present
+#  with_together:
+#    - "{{ acm.spokes }}"
+#    - "{{ payloads.results }}"
