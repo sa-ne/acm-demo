@@ -1,5 +1,5 @@
 - name: Wait for ACM Operator
-  community.kubernetes.k8s_info:
+  kubernetes.core.k8s_info:
     api_key: "{{ lookup('file', '/var/run/secrets/kubernetes.io/serviceaccount/token') }}"
     api_version: v1
     ca_cert: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
@@ -15,7 +15,7 @@
     - pod.resources[0].status.phase == "Running"
 
 - name: Wait for MultiClusterHub
-  community.kubernetes.k8s_info:
+  kubernetes.core.k8s_info:
     api_key: "{{ lookup('file', '/var/run/secrets/kubernetes.io/serviceaccount/token') }}"
     api_version: operator.open-cluster-management.io/v1
     ca_cert: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
@@ -30,7 +30,7 @@
     - multiclusterhub.resources[0].status.phase == "Running"
 
 - name: Find Management Ingress Deployment
-  community.kubernetes.k8s_info:
+  kubernetes.core.k8s_info:
     api_key: "{{ lookup('file', '/var/run/secrets/kubernetes.io/serviceaccount/token') }}"
     api_version: apps/v1
     ca_cert: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
@@ -47,7 +47,7 @@
     verbosity: 1
 
 - name: Patch Management Ingress Deployment
-  community.kubernetes.k8s:
+  kubernetes.core.k8s:
     api_key: "{{ lookup('file', '/var/run/secrets/kubernetes.io/serviceaccount/token') }}"
     ca_cert: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
     host: https://kubernetes.default.svc
