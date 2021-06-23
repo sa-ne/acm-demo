@@ -13,7 +13,4 @@ spec:
       operator: In
       values:
       - "prod"
-    - key: environment
-      operator: In
-      values:
       - "dev"
