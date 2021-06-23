@@ -1,0 +1,19 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: all-environments
+  namespace: acm-demo-gitops
+spec:
+  clusterConditions:
+  - status: "True"
+    type: ManagedClusterConditionAvailable
+  clusterSelector:
+    matchExpressions:
+    - key: environment
+      operator: In
+      values:
+      - "prod"
+    - key: environment
+      operator: In
+      values:
+      - "dev"

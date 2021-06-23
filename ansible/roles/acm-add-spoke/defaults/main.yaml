@@ -9,10 +9,17 @@ acm:
         vendor: auto-detect
         name: dev
         environment: dev
-    - name: prod
-      kubeconfig: /home/chris/ipi/aws/acm-demo-prod/auth/kubeconfig
-      labels:
-        cloud: auto-detect
-        vendor: auto-detect
-        name: prod
-        environment: prod
+#    - name: prod-1
+#      kubeconfig: /home/chris/ipi/aws/acm-demo-prod-1/auth/kubeconfig
+#      labels:
+#        cloud: auto-detect
+#        vendor: auto-detect
+#        name: prod-1
+#        environment: prod
+#    - name: prod-2
+#      kubeconfig: /home/chris/ipi/aws/acm-demo-prod-2/auth/kubeconfig
+#      labels:
+#        cloud: auto-detect
+#        vendor: auto-detect
+#        name: prod-2
+#        environment: prod
