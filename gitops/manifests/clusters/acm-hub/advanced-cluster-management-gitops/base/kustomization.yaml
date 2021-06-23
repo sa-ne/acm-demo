@@ -2,15 +2,4 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - all-environments-application.yaml
-  - all-environments-placementrule.yaml
-  - all-environments-subscription.yaml
-#  - dev-cluster-application.yaml
-  - dev-cluster-placementrule.yaml
-  - dev-cluster-subscription.yaml
-  - dev-environment-placementrule.yaml
-  - gitops-channel.yaml
-  - gitops-namespace.yaml
-  - prod-1-cluster-placementrule.yaml
-  - prod-2-cluster-placementrule.yaml
-  - prod-environment-placementrule.yaml
+  - policies-all-environments-subscription.yaml

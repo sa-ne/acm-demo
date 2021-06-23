@@ -1,10 +1,8 @@
 apiVersion: apps.open-cluster-management.io/v1
 kind: Subscription
 metadata:
-  name: all-environments
+  name: policies-all-environments
   namespace: acm-demo-gitops
-  labels:
-    app: dev-cluster
   annotations:
       apps.open-cluster-management.io/git-branch: main
       apps.open-cluster-management.io/github-path: gitops/manifests/clusters/all/policies/cluster/base

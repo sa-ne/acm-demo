@@ -7,6 +7,9 @@ resources:
   - byo-ingress-sealed.yaml
   - byo-ca-sealed.yaml
   - byo-certs-job.yaml
+  - gitops-channel.yaml
+  - gitops-namespace.yaml
+  - gitops-subscription.yaml
   - multiclusterhub.yaml
   - observability-namespace.yaml
   - observability-obc.yaml
