@@ -4,5 +4,15 @@ acm:
   spokes:
     - name: dev
       kubeconfig: /home/chris/ipi/aws/acm-demo-dev/auth/kubeconfig
+      labels:
+        cloud: auto-detect
+        vendor: auto-detect
+        name: dev
+        environment: dev
     - name: prod
       kubeconfig: /home/chris/ipi/aws/acm-demo-prod/auth/kubeconfig
+      labels:
+        cloud: auto-detect
+        vendor: auto-detect
+        name: prod
+        environment: prod

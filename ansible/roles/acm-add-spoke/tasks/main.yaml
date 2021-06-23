@@ -10,11 +10,7 @@
       apiVersion: cluster.open-cluster-management.io/v1
       kind: ManagedCluster
       metadata:
-        labels:
-          cloud: "{{ spoke.cloud | default('auto-detect') }}"
-          vendor: "{{ spoke.vendor | default('auto-detect') }}"
-          name: "{{ spoke.name }}"
-        name: "{{ spoke.name }}"
+        labels: "{{ spoke.labels }}"
       spec:
         hubAcceptsClient: true
     kubeconfig: "{{ acm.acm_hub_kubeconfig }}"
