@@ -32,7 +32,7 @@ spec:
           volumeMounts:
             - name: inventory
               mountPath: /var/secrets/inventory
-              readOnly: yes
+              readOnly: true
           imagePullPolicy: Always
           name: tower-install-job
       volumes:
