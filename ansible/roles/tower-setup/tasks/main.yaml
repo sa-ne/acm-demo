@@ -31,6 +31,7 @@
     tower_host: "https://{{ tower_route.resources[0].status.ingress[0].host }}"
     tower_password: "{{ lookup('file', '/var/secrets/tower-setup/password') }}"
     tower_username: "{{ lookup('file', '/var/secrets/tower-setup/username') }}"
+    validate_certs: no
 
 - name: Setup Ansible Tower Link in OpenShift Console
   kubernetes.core.k8s:
