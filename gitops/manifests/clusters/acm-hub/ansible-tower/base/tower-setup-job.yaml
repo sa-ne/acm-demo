@@ -7,7 +7,7 @@ metadata:
   labels:
     run: tower-setup-job
   name: tower-setup-job
-  namespace: ansible-tower
+  namespace: ansible-runner
 spec:
   template:
     spec:
