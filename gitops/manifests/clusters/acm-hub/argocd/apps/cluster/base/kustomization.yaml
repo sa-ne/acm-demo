@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - advanced-cluster-management-app.yaml
   - ansible-runner-app.yaml
+  - ansible-tower-app.yaml
   - awx-resource-operator-app.yaml
   - ingress-controller-app.yaml
   - ocs-noobaa-only-app.yaml
