@@ -12,6 +12,7 @@ rules:
       - secrets
       - configmaps
       - routes
+      - consolelinks
     verbs:
       - "*"
   - apiGroups:
