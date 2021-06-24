@@ -1,0 +1,4 @@
+- name: Setup Ansible Tower
+  hosts: localhost
+  roles:
+    - role: tower-setup

@@ -1,0 +1,2 @@
+tower_namespace: ansible-tower
+tower_route_name: ansible-tower-web-svc

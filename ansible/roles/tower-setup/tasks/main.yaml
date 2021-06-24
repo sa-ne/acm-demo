@@ -1,0 +1,52 @@
+- name: Query Ansible Tower Route
+  kubernetes.core.k8s_info:
+    api_key: "{{ lookup('file', '/var/run/secrets/kubernetes.io/serviceaccount/token') }}"
+    api_version: route.openshift.io/v1
+    ca_cert: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+    host: https://kubernetes.default.svc
+    kind: Route
+    name: "{{ tower_route_name }}"
+    namespace: "{{ tower_namespace }}"
+  register: tower_route
+  retries: 60
+  delay: 10
+  until:
+    - tower_route.resources[0].status.ingress[0].host is defined
+
+- name: Wait for Tower API Endpoint
+  ansible.builtin.uri:
+    status_code: 200
+    url: "https://{{ tower_route.resources[0].status.ingress[0].host }}/api"
+  register: tower_api
+  retries: 60
+  delay: 10
+  until:
+    - tower_api.status == 200
+
+- name: Install Tower License
+  ansible.tower.tower_license:
+    eula_accepted: yes
+    manifest: /var/secrets/tower-setup/manifest
+    tower_host: "https://{{ tower_route.resources[0].status.ingress[0].host }}"
+    tower_password: "{{ lookup('file', '/var/secrets/tower-setup/password') }}"
+    tower_username: "{{ lookup('file', '/var/secrets/tower-setup/username') }}"
+
+- name: Setup Ansible Tower Link in OpenShift Console
+  kubernetes.core.k8s:
+    api_key: "{{ lookup('file', '/var/run/secrets/kubernetes.io/serviceaccount/token') }}"
+    ca_cert: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+    host: https://kubernetes.default.svc
+    merge_type: strategic-merge
+    state: present
+    resource_definition:
+      apiVersion: console.openshift.io/v1
+      kind: ConsoleLink
+      metadata:
+        name: ansible-tower-console-link
+      spec:
+        applicationMenu:
+          imageURL: https://upload.wikimedia.org/wikipedia/commons/2/24/Ansible_logo.svg
+          section: Red Hat Applications
+        href: "https://{{ tower_route.resources[0].status.ingress[0].host }}"
+        location: ApplicationMenu
+        text: Red Hat Ansible Tower

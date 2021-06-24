@@ -11,6 +11,7 @@ rules:
       - services
       - secrets
       - configmaps
+      - routes
     verbs:
       - "*"
   - apiGroups:

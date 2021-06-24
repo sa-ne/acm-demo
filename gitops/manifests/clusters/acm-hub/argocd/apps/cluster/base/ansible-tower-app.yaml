@@ -13,7 +13,7 @@ spec:
     server: https://kubernetes.default.svc
   project: cluster-config
   source:
-    path: gitops/manifests/ansible-tower/base
+    path: gitops/manifests/clusters/acm-hub/ansible-tower/base
     repoURL: https://github.com/sa-ne/acm-demo.git
     targetRevision: main
   syncPolicy:
