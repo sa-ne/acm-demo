@@ -17,6 +17,7 @@
   ansible.builtin.uri:
     status_code: 200
     url: "https://{{ tower_route.resources[0].status.ingress[0].host }}/api"
+    validate_certs: no
   register: tower_api
   retries: 60
   delay: 10
