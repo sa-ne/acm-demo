@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
+  - awx-sa-image-puller-rolebinding.yaml
   - kubernetes-awx-image-stream.yaml
   - kubernetes-awx-image-buildconfig.yaml
   - inventory-sealed.yaml
