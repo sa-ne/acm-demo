@@ -22,7 +22,7 @@ spec:
             - name: INVENTORY_FILE
               value: /var/secrets/inventory/inventory
             - name: KUBERNETES_AWX_IMAGE
-              value: image-registry.openshift-image-registry.svc:5000/ansible-tower/kubernetes-awx-image:latest
+              value: image-registry.openshift-image-registry.svc:5000/ansible-tower/kubernetes-awx-image
           command:
             - /bin/bash
             - -c
@@ -35,7 +35,8 @@ spec:
                 -e openshift_token=$TOKEN \
                 -e openshift_pg_pvc_name=postgres-pvc \
                 -e openshift_skip_tls_verify=true \
-                -e kubernetes_awx_image=$KUBERNETES_AWX_IMAGE
+                -e kubernetes_awx_image=$KUBERNETES_AWX_IMAGE \
+                -e kubernetes_awx_version=latest
           volumeMounts:
             - name: inventory
               mountPath: /var/secrets/inventory
