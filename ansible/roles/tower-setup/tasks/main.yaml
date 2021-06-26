@@ -79,3 +79,18 @@
     tower_password: "{{ lookup('file', '/var/secrets/tower-setup/password') }}"
     tower_username: "{{ lookup('file', '/var/secrets/tower-setup/username') }}"
     validate_certs: no
+
+- name: Create Route53 DNS Round Robin Job Template
+  ansible.tower.tower_job_template:
+    ask_variables_on_launch: yes
+    credentials:
+      - "{{ tower_aws_credential_name }}"
+    name: "Route53 Record Update"
+    inventory: "{{ tower_inventory }}"
+    organization: "{{ tower_org }}"
+    project: "{{ tower_project }}"
+    playbook: "ansible/playbooks/route53-dns-roundrobin.yaml"
+    tower_host: "https://{{ tower_route.resources[0].status.ingress[0].host }}"
+    tower_password: "{{ lookup('file', '/var/secrets/tower-setup/password') }}"
+    tower_username: "{{ lookup('file', '/var/secrets/tower-setup/username') }}"
+    validate_certs: no

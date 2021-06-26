@@ -1,5 +1,6 @@
 tower_namespace: ansible-tower
 tower_route_name: ansible-tower-web-svc
+tower_inventory: Demo Inventory
 tower_org: Default
 tower_project: ACM Demo
 tower_project_scm_branch: main
