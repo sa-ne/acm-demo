@@ -29,7 +29,6 @@
     api_key: "{{ lookup('file', '/var/run/secrets/kubernetes.io/serviceaccount/token') }}"
     ca_cert: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
     host: https://kubernetes.default.svc
-    merge_type: strategic-merge
     state: present
     resource_definition:
       apiVersion: console.openshift.io/v1
