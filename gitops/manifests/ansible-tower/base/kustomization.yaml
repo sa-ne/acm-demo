@@ -3,6 +3,8 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
+  - kubernetes-task-image-stream.yaml
+  - kubernetes-task-image-buildconfig.yaml
   - inventory-sealed.yaml
   - postgres-pvc.yaml
   - ansible-tower-install-sa.yaml

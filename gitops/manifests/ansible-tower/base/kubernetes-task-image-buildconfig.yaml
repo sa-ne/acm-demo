@@ -1,0 +1,28 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: kubernetes-task-image
+  namespace: ansible-tower
+spec:
+  runPolicy: Serial
+  source:
+    type: Dockerfile
+    dockerfile: |
+      FROM registry.redhat.io/ansible-tower-38/ansible-tower-rhel7
+      USER 0
+      ENV PIP_CMD=/var/lib/awx/venv/ansible/bin/pip2
+      RUN $PIP_CMD install setuptools --upgrade && \
+        $PIP_CMD install dnspython dig && \
+        curl -L -o /usr/bin/jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && chmod +x /usr/bin/jq
+  strategy:
+    type: Docker
+    dockerStrategy:
+      from:
+        kind: DockerImage
+        name: registry.redhat.io/ansible-tower-38/ansible-tower-rhel7
+  triggers:
+    - type: ConfigChange
+  output:
+    to:
+      kind: ImageStreamTag
+      name: kubernetes-task-image:latest
