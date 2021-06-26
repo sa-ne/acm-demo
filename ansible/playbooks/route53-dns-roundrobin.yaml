@@ -1,0 +1,4 @@
+- name: Route53 DNS Round Robin
+  hosts: localhost
+  roles:
+    - role: route53-dns-roundrobin

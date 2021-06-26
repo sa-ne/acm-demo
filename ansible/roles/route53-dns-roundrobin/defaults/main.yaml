@@ -1,0 +1,6 @@
+route53_app_zone: aws.uc2.io
+route53_app_record: omc-round-robin
+base_domain: rhpds.aws.uc2.io
+target_clusters:
+  - prod-1
+  - prod-2
