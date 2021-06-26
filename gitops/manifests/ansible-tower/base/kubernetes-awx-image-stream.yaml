@@ -1,6 +1,6 @@
 apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
-  name: kubernetes-task-image
+  name: kubernetes-awx-image
   namespace: ansible-tower
 spec: {}

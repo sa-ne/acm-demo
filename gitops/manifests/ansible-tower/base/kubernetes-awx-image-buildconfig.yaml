@@ -1,7 +1,7 @@
 kind: BuildConfig
 apiVersion: build.openshift.io/v1
 metadata:
-  name: kubernetes-task-image
+  name: kubernetes-awx-image
   namespace: ansible-tower
 spec:
   runPolicy: Serial
@@ -25,4 +25,4 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: kubernetes-task-image:latest
+      name: kubernetes-awx-image:latest
