@@ -35,7 +35,6 @@ spec:
             - name: tower-setup
               mountPath: /var/secrets/tower-setup
               readOnly: true
-          volumeMounts:
             - name: route53-zone-credentials
               mountPath: /var/secrets/route53-zone-credentials
               readOnly: true
