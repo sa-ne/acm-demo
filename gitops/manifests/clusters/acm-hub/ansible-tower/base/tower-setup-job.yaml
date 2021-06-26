@@ -35,12 +35,20 @@ spec:
             - name: tower-setup
               mountPath: /var/secrets/tower-setup
               readOnly: true
+          volumeMounts:
+            - name: route53-zone-credentials
+              mountPath: /var/secrets/route53-zone-credentials
+              readOnly: true
           imagePullPolicy: Always
           name: tower-install-job
       volumes:
         - name: tower-setup
           secret:
             secretName: tower-setup
+            defaultMode: 0444
+        - name: route53-zone-credentials
+          secret:
+            secretName: route53-zone-credentials
             defaultMode: 0444
       dnsPolicy: ClusterFirst
       restartPolicy: OnFailure

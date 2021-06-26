@@ -1,3 +1,4 @@
+- name: Query AWS Credentials Secret
 - name: Query Ansible Tower Route
   kubernetes.core.k8s_info:
     api_key: "{{ lookup('file', '/var/run/secrets/kubernetes.io/serviceaccount/token') }}"
@@ -24,15 +25,6 @@
   until:
     - tower_api.status == 200
 
-- name: Install Tower License
-  ansible.tower.tower_license:
-    eula_accepted: yes
-    manifest: /var/secrets/tower-setup/manifest
-    tower_host: "https://{{ tower_route.resources[0].status.ingress[0].host }}"
-    tower_password: "{{ lookup('file', '/var/secrets/tower-setup/password') }}"
-    tower_username: "{{ lookup('file', '/var/secrets/tower-setup/username') }}"
-    validate_certs: no
-
 - name: Setup Ansible Tower Link in OpenShift Console
   kubernetes.core.k8s:
     api_key: "{{ lookup('file', '/var/run/secrets/kubernetes.io/serviceaccount/token') }}"
@@ -52,3 +44,40 @@
         href: "https://{{ tower_route.resources[0].status.ingress[0].host }}"
         location: ApplicationMenu
         text: Red Hat Ansible Tower
+
+- name: Install Tower License
+  ansible.tower.tower_license:
+    eula_accepted: yes
+    manifest: /var/secrets/tower-setup/manifest
+    tower_host: "https://{{ tower_route.resources[0].status.ingress[0].host }}"
+    tower_password: "{{ lookup('file', '/var/secrets/tower-setup/password') }}"
+    tower_username: "{{ lookup('file', '/var/secrets/tower-setup/username') }}"
+    validate_certs: no
+
+- name: Create {{ tower_project }} Project
+  ansible.tower.tower_project:
+    name: "{{ tower_project }}"
+    organization: "{{ tower_org }}"
+    scm_branch: "{{ tower_project_scm_branch }}"
+    scm_type: git
+    scm_update_on_launch: yes
+    scm_url: "{{ tower_project_scm_url }}"
+    state: present
+    tower_host: "https://{{ tower_route.resources[0].status.ingress[0].host }}"
+    tower_password: "{{ lookup('file', '/var/secrets/tower-setup/password') }}"
+    tower_username: "{{ lookup('file', '/var/secrets/tower-setup/username') }}"
+    validate_certs: no
+
+- name: Create AWS Credentials
+  ansible.tower.tower_credential:
+    credential_type: aws
+    inputs:
+      username: "{{ lookup('file', '/var/secrets/route53-zone-credentials/aws_access_key_id') }}"
+      password: "{{ lookup('file', '/var/secrets/route53-zone-credentials/aws_secret_access_key') }}"
+    name: "{{ tower_aws_credential_name }}"
+    organization: "{{ tower_org }}"
+    state: present
+    tower_host: "https://{{ tower_route.resources[0].status.ingress[0].host }}"
+    tower_password: "{{ lookup('file', '/var/secrets/tower-setup/password') }}"
+    tower_username: "{{ lookup('file', '/var/secrets/tower-setup/username') }}"
+    validate_certs: no

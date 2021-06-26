@@ -12,13 +12,18 @@ rules:
       - secrets
       - configmaps
       - routes
-      - consolelinks
     verbs:
       - "*"
   - apiGroups:
       - observability.open-cluster-management.io
     resources:
       - multiclusterobservabilities
+    verbs:
+      - "*"
+  - apiGroups:
+      - console.openshift.io
+    resources:
+      - consolelinks
     verbs:
       - "*"
   - apiGroups:

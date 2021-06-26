@@ -1,2 +1,7 @@
 tower_namespace: ansible-tower
 tower_route_name: ansible-tower-web-svc
+tower_org: Default
+tower_project: ACM Demo
+tower_project_scm_branch: main
+tower_project_scm_url: https://github.com/sa-ne/acm-demo.git
+tower_aws_credential_name: Route53 Credential

@@ -4,4 +4,5 @@ kind: Kustomization
 resources:
   - ../../../../ansible-tower/base
   - tower-setup-sealed.yaml
+  - route53-zone-credentials-sealed.yaml
   - tower-setup-job.yaml
