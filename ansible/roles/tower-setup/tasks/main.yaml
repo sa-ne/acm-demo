@@ -68,7 +68,7 @@
 
 - name: Create AWS Credentials
   ansible.tower.tower_credential:
-    credential_type: aws
+    credential_type: Amazon Web Services
     inputs:
       username: "{{ lookup('file', '/var/secrets/route53-zone-credentials/aws_access_key_id') }}"
       password: "{{ lookup('file', '/var/secrets/route53-zone-credentials/aws_secret_access_key') }}"
