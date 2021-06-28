@@ -3,3 +3,5 @@ kind: Kustomization
 
 resources:
   - policies-all-environments-subscription.yaml
+  - omc-application/omc-channel.yaml
+  - omc-application/omc-subscription.yaml
