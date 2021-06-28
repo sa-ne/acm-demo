@@ -5,7 +5,7 @@ metadata:
   namespace: acm-demo-gitops
   annotations:
       apps.open-cluster-management.io/git-branch: main
-      apps.open-cluster-management.io/github-path: gitops/manifests/clusters/all/policies/cluster/base
+      apps.open-cluster-management.io/github-path: gitops/manifests/clusters/all/policies/base
       apps.open-cluster-management.io/reconcile-option: merge
 spec:
   channel: acm-demo-gitops/acm-demo-gitops

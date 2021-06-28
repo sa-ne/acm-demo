@@ -80,7 +80,7 @@
     tower_password: "{{ lookup('file', '/var/secrets/tower-setup/password') }}"
     tower_username: "{{ lookup('file', '/var/secrets/tower-setup/username') }}"
     validate_certs: "{{ validate_certs }}"
-  loop: "{{ tower_aws_secrets }}"
+  loop: "{{ tower_aws_credentials }}"
 
 - name: Create Job Templates
   ansible.tower.tower_job_template:
