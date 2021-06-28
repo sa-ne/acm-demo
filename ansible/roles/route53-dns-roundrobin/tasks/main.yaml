@@ -23,6 +23,7 @@
     overwrite: yes
     record: "{{ route53_app_record }}.{{ route53_app_zone }}"
     state: create
+    ttl: 10
     type: A
     value: "{{ ingress_ips }}"
     zone: "{{ route53_app_zone }}"
