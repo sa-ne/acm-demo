@@ -1,0 +1,13 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: ansible-resource-operator
+  namespace: acm-demo-gitops
+placementRef:
+  apiGroup: apps.open-cluster-management.io
+  kind: PlacementRule
+  name: all-environments
+subjects:
+- apiGroup: policy.open-cluster-management.io
+  kind: Policy
+  name: ansible-resource-operator

@@ -5,3 +5,5 @@ resources:
   - all-environments-placementrule.yaml
   - openshift-pipelines-operator-binding.yaml
   - openshift-pipelines-operator-policy.yaml
+  - ansible-resource-operator-binding.yaml
+  - ansible-resource-operator-policy.yaml
