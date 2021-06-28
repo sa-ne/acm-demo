@@ -1,0 +1,4 @@
+create_target_namespace: yes
+target_namespace: openshift-mini-console
+tower_host: ansible-tower-web-svc-ansible-tower.apps.acm-hub.rhpds.aws.uc2.io
+validate_certs: no

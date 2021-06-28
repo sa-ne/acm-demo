@@ -1,0 +1,76 @@
+- name: Assert Extra Variables are Defined
+  ansible.builtin.assert:
+    fail_msg: >-
+      Please run playbook with
+      -e target_kubeconfig=<kubeconfig> -e target_user=<user>
+      -e target_password=<password> -e target_job_template=<job-template>
+    that:
+      - target_kubeconfig is defined
+      - target_username is defined
+      - target_password is defined
+      - target_job_template is defined
+
+- name: Create Application User
+  ansible.tower.tower_user:
+    password: "{{ target_password }}"
+    state: present
+    tower_host: "https://{{ tower_host }}"
+    tower_password: "{{ tower_password }}"
+    tower_username: "{{ tower_username }}"
+    username: "{{ target_username }}"
+    validate_certs: "{{ validate_certs }}"
+
+- name: Grant Application User Permissions
+  ansible.tower.tower_role:
+    job_template: "{{ target_job_template | urlencode }}"
+    role: execute
+    state: present
+    tower_host: "https://{{ tower_host }}"
+    tower_password: "{{ tower_password }}"
+    tower_username: "{{ tower_username }}"
+    user: "{{ target_username }}"
+    validate_certs: "{{ validate_certs }}"
+
+- name: Generate Token for User "{{ target_username }}"
+  ansible.tower.tower_token:
+    description: "Token for user {{ target_username }}"
+    scope: write
+    state: present
+    tower_host: "https://{{ tower_host }}"
+    tower_password: "{{ target_password }}"
+    tower_username: "{{ target_username }}"
+    validate_certs: "{{ validate_certs }}"
+  register: target_token
+
+- name: Assert Token is Present
+  ansible.builtin.assert:
+    fail_msg: "target_token.ansible_facts.tower_token.token is not defined!"
+    that:
+      - target_token.ansible_facts.tower_token.token is defined
+
+- name: Create Target Namespace
+  kubernetes.core.k8s:
+    kubeconfig: "{{ target_kubeconfig }}"
+    state: present
+    resource_definition: "{{ lookup('template', 'templates/namespace.j2') }}"
+  when:
+    - create_target_namespace is defined
+    - create_target_namespace
+
+- name: Query Target Namespace
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Namespace
+    kubeconfig: "{{ target_kubeconfig }}"
+    name: "{{ target_namespace }}"
+  register: target_namespace_results
+  retries: 60
+  delay: 10
+  until:
+    - target_namespace_results.resources[0].status.phase == "Active"
+
+- name: Create toweraccess Secret
+  kubernetes.core.k8s:
+    kubeconfig: "{{ target_kubeconfig }}"
+    state: present
+    resource_definition: "{{ lookup('template', 'templates/toweraccess.j2') }}"

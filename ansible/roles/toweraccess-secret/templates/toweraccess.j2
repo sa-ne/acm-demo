@@ -1,0 +1,9 @@
+apiVersion: v1
+stringData:
+  host: https://{{ tower_host }}
+  token: {{ target_token.ansible_facts.tower_token.token }}
+kind: Secret
+metadata:
+  name: toweraccess
+  namespace: {{ target_namespace }}
+type: Opaque

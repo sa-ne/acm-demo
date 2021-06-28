@@ -50,47 +50,49 @@
     tower_host: "https://{{ tower_route.resources[0].status.ingress[0].host }}"
     tower_password: "{{ lookup('file', '/var/secrets/tower-setup/password') }}"
     tower_username: "{{ lookup('file', '/var/secrets/tower-setup/username') }}"
-    validate_certs: no
+    validate_certs: "{{ validate_certs }}"
 
-- name: Create {{ tower_project }} Project
+- name: Create Tower Projects
   ansible.tower.tower_project:
-    name: "{{ tower_project }}"
-    organization: "{{ tower_org }}"
-    scm_branch: "{{ tower_project_scm_branch }}"
-    scm_type: git
-    scm_update_on_launch: yes
-    scm_url: "{{ tower_project_scm_url }}"
+    name: "{{ item.name }}"
+    organization: "{{ item.org }}"
+    scm_branch: "{{ item.scm_branch }}"
+    scm_type: "{{ item.scm_type }}"
+    scm_update_on_launch: "{{ item.scm_update_on_launch }}"
+    scm_url: "{{ item.scm_url }}"
     state: present
     tower_host: "https://{{ tower_route.resources[0].status.ingress[0].host }}"
     tower_password: "{{ lookup('file', '/var/secrets/tower-setup/password') }}"
     tower_username: "{{ lookup('file', '/var/secrets/tower-setup/username') }}"
-    validate_certs: no
+    validate_certs: "{{ validate_certs }}"
+  loop: "{{ tower_projects }}"
 
 - name: Create AWS Credentials
   ansible.tower.tower_credential:
     credential_type: Amazon Web Services
     inputs:
-      username: "{{ lookup('file', '/var/secrets/route53-zone-credentials/aws_access_key_id') }}"
-      password: "{{ lookup('file', '/var/secrets/route53-zone-credentials/aws_secret_access_key') }}"
-    name: "{{ tower_aws_credential_name }}"
-    organization: "{{ tower_org }}"
+      password: "{{ item.password }}"
+      username: "{{ item.username }}"
+    name: "{{ item.name }}"
+    organization: "{{ item.org }}"
     state: present
     tower_host: "https://{{ tower_route.resources[0].status.ingress[0].host }}"
     tower_password: "{{ lookup('file', '/var/secrets/tower-setup/password') }}"
     tower_username: "{{ lookup('file', '/var/secrets/tower-setup/username') }}"
-    validate_certs: no
+    validate_certs: "{{ validate_certs }}"
+  loop: "{{ tower_aws_secrets }}"
 
-- name: Create Route53 DNS Round Robin Job Template
+- name: Create Job Templates
   ansible.tower.tower_job_template:
-    ask_variables_on_launch: yes
-    credentials:
-      - "{{ tower_aws_credential_name }}"
-    name: "Route53 Record Update"
-    inventory: "{{ tower_inventory }}"
-    organization: "{{ tower_org }}"
-    project: "{{ tower_project }}"
-    playbook: "ansible/playbooks/route53-dns-roundrobin.yaml"
+    ask_variables_on_launch: "{{ item.ask_variables_on_launch }}"
+    credentials: "{{ item.credentials }}"
+    name: "{{ item.name }}"
+    inventory: "{{ item.inventory }}"
+    organization: "{{ item.org }}"
+    project: "{{ item.project }}"
+    playbook: "{{ item.playbook }}"
     tower_host: "https://{{ tower_route.resources[0].status.ingress[0].host }}"
     tower_password: "{{ lookup('file', '/var/secrets/tower-setup/password') }}"
     tower_username: "{{ lookup('file', '/var/secrets/tower-setup/username') }}"
-    validate_certs: no
+    validate_certs: "{{ validate_certs }}"
+  loop: "{{ tower_job_templates }}"

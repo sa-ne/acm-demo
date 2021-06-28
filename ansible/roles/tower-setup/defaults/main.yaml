@@ -1,8 +1,24 @@
+tower_aws_credentials:
+- name: Route53 Credential
+  org: Default
+  password: "{{ lookup('file', '/var/secrets/route53-zone-credentials/aws_secret_access_key') }}"
+  username: "{{ lookup('file', '/var/secrets/route53-zone-credentials/aws_access_key_id') }}"
+tower_job_templates:
+- ask_variables_on_launch: yes
+  credentials:
+  - "Route53 Credential"
+  inventory: Demo Inventory
+  name: route53-dns-roundrobin
+  org: Default
+  project: ACM Demo
+  playbook: ansible/playbooks/route53-dns-roundrobin.yaml
 tower_namespace: ansible-tower
+tower_projects:
+- name: ACM Demo
+  org: Default
+  scm_branch: main
+  scm_type: git
+  scm_update_on_launch: yes
+  scm_url: https://github.com/sa-ne/acm-demo.git
 tower_route_name: ansible-tower-web-svc
-tower_inventory: Demo Inventory
-tower_org: Default
-tower_project: ACM Demo
-tower_project_scm_branch: main
-tower_project_scm_url: https://github.com/sa-ne/acm-demo.git
-tower_aws_credential_name: Route53 Credential
+validate_certs: no
