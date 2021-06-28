@@ -40,11 +40,11 @@ spec:
               apiVersion: operators.coreos.com/v1alpha1
               kind: Subscription
               metadata:
-                name: openshift-pipelines-operator-rh
-                namespace: openshift-operators
+                name: awx-resource-operator-subscription
+                namespace: ansible-resource-operator
               spec:
-                channel: stable
+                channel: release-0.1
                 installPlanApproval: Automatic
-                name: openshift-pipelines-operator-rh
+                name: awx-resource-operator
                 source: redhat-operators
                 sourceNamespace: openshift-marketplace
