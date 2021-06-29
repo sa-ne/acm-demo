@@ -28,7 +28,7 @@ oc apply -k gitops/manifests/bootstrap/openshift-gitops/base
 This demo requires the use of sensitive information like certificates, credentials, tokens, etc. They are stored and protected in this repository using Sealed Secrets. Deploy the Sealed Secrets controller by running:
 
 ```console
-kustomize build gitops/manifests/bootstrap/sealed-secrets/base
+kustomize build gitops/manifests/bootstrap/sealed-secrets/base | oc apply -f -
 ```
 
 We will be leveraging an "App of Apps" pattern with Argo CD, deploy the initial application as follows:
