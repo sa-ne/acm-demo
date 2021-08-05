@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - clusterrolebinding-gatekeeper-manager-rolebinding.yaml
+  - clusterrole-gatekeeper-manager-role.yaml
+  - crd-configs-config-gatekeeper-sh.yaml
+  - crd-constrainttemplatepodstatuses-status-gatekeeper-sh.yaml
+  - crd-constrainttemplates-templates-gatekeeper-sh.yaml
+  - crd-status-gatekeeper-sh.yaml
+  - deployment-gatekeeper-audit.yaml
+  - deployment-gatekeeper-controller-manager.yaml
+  - namespace.yaml
+  - pdb-gatekeeper-controller-manager.yaml
+  - psp-gatekeeper-admin.yaml
+  - resourcequota-gatekeeper-critical-pods.yaml
+  - rolebinding-gatekeeper-manager-rolebinding.yaml
+  - role-gatekeeper-manager-role.yaml
+  - secret-gatekeeper-webhook-server-cert.yaml
+  - serviceaccount-gatekeeper-admin.yaml
+  - service-gatekeeper-webhook-service.yaml
+  - vwc-gatekeeper-validating-webhook-configuration.yaml
